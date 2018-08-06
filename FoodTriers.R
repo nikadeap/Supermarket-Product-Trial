@@ -1,5 +1,5 @@
 
-#Read the FoodTriers.csv file
+#Read the Data.csv file
 setwd('C:/......')
 
 FoodTriers <- read.csv("Data.csv", header = TRUE)
