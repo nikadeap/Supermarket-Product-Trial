@@ -1,13 +1,13 @@
-#Read the LasagnaTriers.csv file
-setwd('C:/Users/Harish/Desktop/BDA/Assignment')
+#Read the Data.csv file
+setwd('C:/.............')
 
 #Read LasgnaTriers csv File
-LasagnaTriers <- read.csv("Lasagna Triers.csv",header=TRUE)
+FoodTriers <- read.csv("Data.csv",header=TRUE)
 
-print("*************Question 6.a and 6.b*****************************")
+
 #Calculate length of outcomes and percentile value for 99th %ile
-len <- length(LasagnaTriers$Income)
-quant <-quantile(LasagnaTriers$Income,0.99)
+len <- length(FoodTriers$Income)
+quant <-quantile(FoodTriers$Income,0.99)
 print(paste("99th percentile score is", quant))
 
 #Conditional 'for loop' to identify those rare events for which income exceeds 99th%ile.
@@ -15,19 +15,19 @@ print(paste("99th percentile score is", quant))
 #Question A and B
 #Calculating the rarities and appending a new variable rare to dataset
 for (i in 1: len){
-  if (LasagnaTriers$Income[i] > quant)
+  if (FoodTriers$Income[i] > quant)
   {
-    LasagnaTriers$Rare[i]=TRUE
+    FoodTriers$Rare[i]=TRUE
     }else
       {
-  LasagnaTriers$Rare[i]=FALSE
+  FoodTriers$Rare[i]=FALSE
   }
   
 }
 
 
 #Append the new variable rare to dataset and calculate the number of rare events
-countRareTrue <- nrow(subset(LasagnaTriers,LasagnaTriers$Rare==TRUE))
+countRareTrue <- nrow(subset(FoodTriers,FoodTriers$Rare==TRUE))
 print(paste("Number of rarities is ",countRareTrue))
 countRareFalse <-len-countRareTrue
 
@@ -45,7 +45,7 @@ samples <- data.frame(matrix(nrow = sampleSize,ncol = numSamples))
 colnames(samples)<-  paste("Sample",
                            c(1:numSamples))
 #What to sample from?-rare event(True/false)
-raritySample <- LasagnaTriers$Rare
+raritySample <- FoodTriers$Rare
 
 
 counts <- vector(len=numSamples)
@@ -74,7 +74,7 @@ print(Rarities)
 
 #*********************************************************************************************************************
 
-print("***********************************Question 6.d*******************************************")
+
 #Calculate the levels of Counts by convering it to a factor
 count_factor <-as.factor(counts)
 level <- length(levels(count_factor))-1
@@ -124,7 +124,7 @@ ExpectedVar <- weighted.mean(Frequency_table$SquaredMeanDist,Frequency_table$pDi
 print(paste("Expected variance is ",ExpectedVar))
 
 #***************************************************************************************************************
-print("********************************Question6.f**************************************************")
+
 #Assumption:expected value and variance as approximately similar to np and np(1-p) and n=40.Calculate p
 #p is success probability
 
@@ -156,7 +156,7 @@ for (i in 1:length(Frequency_table$X)){
 print(Frequency_table)
 
 #**********************************************************************************************************
-print("****************Question6.h*******************************")
+
 #Chi-square goodness of fit test
 #Binomial Model
 observed <- Frequency_table$Binom_PMF
