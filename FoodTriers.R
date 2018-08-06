@@ -1,23 +1,23 @@
 
-#Read the LasagnaTriers.csv file
-setwd('C:/Users/Harish/Desktop/BDA/Assignment')
+#Read the FoodTriers.csv file
+setwd('C:/......')
 
-LasagnaTriers <- read.csv("Lasagna Triers.csv", header = TRUE)
+FoodTriers <- read.csv("Data.csv", header = TRUE)
 library(ggplot2)
 library(e1071)
 
 
-print("*****************Question 5.a************************")
 
-#Question 5.a
+
+
 #Calculate Kurtosis and skew of variable person
-kurtosis <- kurtosis(LasagnaTriers$Person)
+kurtosis <- kurtosis(FoodTriers$Person)
 print(kurtosis)
-skew <- skewness(LasagnaTriers$Person)
+skew <- skewness(FoodTriers$Person)
 print(skew)
 print("As Person is a categorical variable, calculation skew and kurtosis is not meaningful")
 
-print("*****************Question 5.d************************")
+
 #This question is R-implementation of question 5.b and 5.c
 
 #Create age buckets based on the age given in csv file
@@ -25,25 +25,25 @@ print("*****************Question 5.d************************")
 library(questionr)
 #Create an Age Bucket using cut function
 
-LasagnaTriers$Agebucket <-
-  cut((LasagnaTriers$Age),
+FoodTriers$Agebucket <-
+  cut((FoodTriers$Age),
       c(20, 24, 29, 34, 39, 44, 49, 54, 59, 64),
       include.lowest = FALSE)
 
 
-print(tapply(LasagnaTriers$Age, LasagnaTriers$Agebucket, FUN = length))
+print(tapply(FoodTriers$Age, FoodTriers$Agebucket, FUN = length))
 
 
 #Group data as per Age bucket and classify average of weight in terms of Lasgna Triers and non-Triers
 
-Triers <- subset(LasagnaTriers, LasagnaTriers$Have.Tried == 'Yes')
+Triers <- subset(FoodTriers, FoodTriers$Have.Tried == 'Yes')
 
-NonTriers <- subset(LasagnaTriers, LasagnaTriers$Have.Tried == 'No')
+NonTriers <- subset(FoodTriers, FoodTriers$Have.Tried == 'No')
 
 #Count of Lasgna Triers and non-Triers as per Age bucket
 AgeCount <- data.frame()
-AgeCount <- with(LasagnaTriers, wtd.table(Agebucket, Have.Tried))
-print("Count of Lasagna Triers and non-Triers within age buckets")
+AgeCount <- with(FoodTriers, wtd.table(Agebucket, Have.Tried))
+print("Count of Food Triers and non-Triers within age buckets")
 print(AgeCount)
 
 #Average weights as per age buckets for Lasgna Triers and nonTriers
@@ -62,15 +62,15 @@ nonTriers_wt <-
 colnames(nonTriers_wt) <- c('AgeBucket', 'LasgnaNonTriers-Weight')
 
 total_wt <- merge(Triers_wt, nonTriers_wt, by = "AgeBucket")
-print("Classifying weight in categories Lasagna Triers and non-Triers as per Age bucket")
+print("Classifying weight in categories Food Triers and non-Triers as per Age bucket")
 print(total_wt)
 
 for (i in 1:length(total_wt$AgeBucket)) {
   if (total_wt$`LasgnaTriers-Weight`[i] > total_wt$`LasgnaNonTriers-Weight`[i]) {
-    print("Average weight of Lasagna triers is greater than non-Triers")
+    print("Average weight of Food triers is greater than non-Triers")
   }
   else{
-    print("Average weight of Lasagna non-triers is greater than Triers")
+    print("Average weight of Food non-triers is greater than Triers")
   }
 }
 
@@ -87,16 +87,16 @@ barplot(
   legend = c("Triers", "NonTriers"),
   names.arg = total_wt$AgeBucket,
   beside = TRUE,
-  main = "comparison of weight in Lasagna triers vs Non-Triers"
+  main = "comparison of weight in Food triers vs Non-Triers"
 )
 
 
 # Visualizing realationship between Weight and Age
 #ggplot to visualize relationship between weight and age
-ggplot(data = LasagnaTriers) +
+ggplot(data = FoodTriers) +
   geom_point(mapping = aes(x = Age, y = Weight), col = "red")
 
-correlation <- cor(LasagnaTriers$Age, LasagnaTriers$Weight)
+correlation <- cor(FoodTriers$Age, FoodTriers$Weight)
 
 print(
   paste(
@@ -107,8 +107,7 @@ print(
 )
 
 #***********************************************************************************************************************
-print("***************Question 5.e**********************************")
-#Question5.e
+
 
 set.seed(800)
 
@@ -125,7 +124,7 @@ hist(normvar,xlim=c(190,200),ylim=c(0,20))
 qqnorm(normvar, col = "red") # QQ-plot
 qqline(normvar, col = "blue", lwd = 3)
 
-print("conclusion: based on QQ-plot, weights of the Lasagna Triers(Have.Tried=Yes) are normally distributed")
+print("conclusion: based on QQ-plot, weights of the Food Triers(Have.Tried=Yes) are normally distributed")
 
 
 #Calculate the skewness of the Weight Variable
